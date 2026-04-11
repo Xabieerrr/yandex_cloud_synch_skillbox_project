@@ -121,17 +121,17 @@
 
 ### Пример обработки ошибки конфигурации
 
-
+```python
 def validate_local_folder(path):
     if not os.path.isdir(path):
         raise ValueError(f"Локальная папка не найдена: {path}")
-
+```
 
 Если папка не существует, вызывается `ValueError`, и программа завершает работу с понятным сообщением.
 
 ### Пример обработки ошибки при запуске программы
 
-
+```python
 try:
     config = load_config("config.ini")
     settings = get_settings(config)
@@ -139,13 +139,13 @@ try:
     validate_remote_access(disk_client)
 except ValueError as error:
     print(f"Ошибка конфигурации: {error}")
-
+```
 
 Здесь ошибки конфигурации перехватываются и выводятся пользователю.
 
 ### Пример обработки ошибки во время синхронизации
 
-
+```python
 def _upload_new_files(self, filenames):
     for filename in filenames:
         path = os.path.join(self.local_folder, filename)
@@ -154,20 +154,20 @@ def _upload_new_files(self, filenames):
             logging.info("Загружен новый файл: %s", filename)
         except Exception as error:
             logging.error("Ошибка загрузки файла %s: %s", filename, error)
-
+```
 
 Если файл не удалось загрузить, программа не завершается, а просто записывает ошибку в лог.
 
 ### Пример обработки ошибки при первой синхронизации
 
-
+```python
 def _first_sync(self, local_snapshot):
     try:
         remote_info = self.disk_client.get_info()
     except Exception as error:
         logging.error("Ошибка получения списка удалённых файлов: %s", error)
         return False
-
+```
 
 Если при первой синхронизации не удалось получить список файлов с Яндекс Диска, ошибка записывается в лог, и первая синхронизация не считается завершённой.
 
